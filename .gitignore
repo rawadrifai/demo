@@ -1,14 +1,33 @@
-.gradle
+.gradle/
 build/
+target/
+bin/
+dependency-reduced-pom.xml
+gradle/wrapper/gradle-wrapper.properties
 
-# Ignore Gradle GUI config
-gradle-app.setting
+# IntelliJ IDEA Files
 
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
+*.iml
+*.ipr
+*.iws
+*.idea
 
-# Cache of project
-.gradletasknamecache
+# Eclipse Project Files
 
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
+.classpath
+.project
+.settings/
+
+# Operating System Files
+
+*.DS_Store
+Thumbs.db
+*.sw?
+.#*
+*#
+*~
+*.sublime-*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
