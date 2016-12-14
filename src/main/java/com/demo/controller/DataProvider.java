@@ -33,11 +33,11 @@ public class DataProvider {
             item1.setName("Chrome");
 
             Item item2 = new Item();
-            item2.setId(1);
+            item2.setId(2);
             item2.setName("Firefox");
 
             Item item3 = new Item();
-            item3.setId(1);
+            item3.setId(3);
             item3.setName("Safari");
 
             List<Item> items = new ArrayList<>();
