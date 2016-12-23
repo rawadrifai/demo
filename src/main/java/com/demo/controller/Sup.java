@@ -26,7 +26,7 @@ public class Sup {
     public ResponseEntity<String> test() throws Exception {
 
         try {
-            return new ResponseEntity<String>("hello world 123", HttpStatus.OK);
+            return new ResponseEntity<String>("hello world...", HttpStatus.OK);
         }
         catch (Exception ex) {
             LOG.error("exception happened: ", ex);
