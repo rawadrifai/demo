@@ -6,4 +6,9 @@ spring:
     url: "jdbc:mysql://localhost:3306/playground"
     password: "admin"
     username: "admin"
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
 

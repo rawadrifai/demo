@@ -1,6 +1,7 @@
 package com.demo.service;
 
-import com.demo.domain.UserEntity;
+import com.demo.domain.User;
+import com.demo.repository.UserRepository;
 import com.demo.request.SignupRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,25 +20,27 @@ public class AuthService {
     @Autowired
     UserRepository userRepository;
 
-    public UserEntity registerUser(SignupRequest signupRequest) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public User registerUser(SignupRequest signupRequest) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-        UserEntity userEntity = new UserEntity();
-        userEntity.setEmail(signupRequest.getEmail());
-        userEntity.setFirstName(signupRequest.getFirstName());
-        userEntity.setLastName(signupRequest.getLastName());
-        userEntity.setSalt(Long.toString(System.currentTimeMillis()));
+        User user = new User();
+        user.setUserId(signupRequest.getUserId());
+        user.setEmail(signupRequest.getEmail());
+        user.setFirstName(signupRequest.getFirstName());
+        user.setLastName(signupRequest.getLastName());
+        user.setSalt(Long.toString(System.currentTimeMillis()));
+        user.setAddresses(signupRequest.getAddresses());
 
         // password stored will be password + salt
-        String clearPasswordAndSalt = signupRequest.getPassword() + userEntity.getSalt();
+        String clearPasswordAndSalt = signupRequest.getPassword() + user.getSalt();
 
         // hash password + salt
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(clearPasswordAndSalt.getBytes("UTF-8")); // Change this to "UTF-16" if needed
         byte[] digest = md.digest();
 
-        userEntity.setPassword(new String(digest));
-
-        return userRepository.save(userEntity);
+      //  user.setPassword(new String(digest));
+        user.setPassword(signupRequest.getPassword());
+        return userRepository.save(user);
 
 
     }

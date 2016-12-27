@@ -3,6 +3,7 @@ package com.demo.controller;
 import com.demo.exception.UnauthorizedLoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,31 +23,38 @@ public class MainControllerAdvice {
     @ExceptionHandler(UnauthorizedLoginException.class)
     public ResponseEntity<String> handleUnauthorizedLoginException(HttpServletRequest request, Exception ex) {
 
-        LOG.info(ex.getMessage());
-        LOG.info(
-                "request.getAuthType(): " + request.getAuthType()
-                        + "request.getAuthType(): " + request.getAuthType()
-                        + "request.getContextPath(): " + request.getContextPath()
-                        + "request.getMethod(): " + request.getMethod()
-                        + "request.getPathInfo(): " + request.getPathInfo()
-                        + "request.getPathTranslated(): " + request.getPathTranslated()
-                        + "request.getQueryString(): " + request.getQueryString()
-                        + "request.getRemoteUser(): " + request.getRemoteUser()
-                        + "request.getProtocol(): " + request.getProtocol()
-                        + "request.getServerPort(): " + request.getServerPort()
-                        + "request.getRequestURI(): " + request.getRequestURI()
-        );
-
+        logRequestInfoAndException(request, ex);
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolationException(HttpServletRequest request, Exception ex) {
+
+        logRequestInfoAndException(request, ex);
+        return new ResponseEntity<String>("Record already exists", HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
+    public ResponseEntity<String> handleException(HttpServletRequest request, Exception ex) {
 
-        LOG.info("exception caught: " + ex.getMessage());
-        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-
+        logRequestInfoAndException(request, ex);
+        return new ResponseEntity<String>("Report this exception: " + ex.getClass() + " - " + ex.getMessage(), HttpStatus.NO_CONTENT);
     }
 
+    private void logRequestInfoAndException(HttpServletRequest request, Exception ex) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(ex.getClass().toString()).append("-").append(ex.getMessage());
+        stringBuffer.append("request.getAuthType(): ").append(request.getAuthType());
+        stringBuffer.append("request.getAuthType(): ").append(request.getAuthType());
+        stringBuffer.append("request.getContextPath(): ").append(request.getContextPath());
+        stringBuffer.append("request.getMethod(): ").append(request.getMethod());
+        stringBuffer.append("request.getPathInfo(): ").append(request.getPathInfo());
+        stringBuffer.append("request.getPathTranslated(): ").append(request.getPathTranslated());
+        stringBuffer.append("request.getQueryString(): ").append(request.getQueryString());
+        stringBuffer.append("request.getRemoteUser(): ").append(request.getRemoteUser());
+        stringBuffer.append("request.getProtocol(): ").append(request.getProtocol());
+        stringBuffer.append("request.getServerPort(): ").append(request.getServerPort());
+        stringBuffer.append("request.getRequestURI(): ").append(request.getRequestURI());
+        LOG.info(stringBuffer.toString());
+    }
 }

@@ -1,6 +1,10 @@
 package com.demo.request;
 
+import com.demo.domain.Address;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rawad.elrifai on 12/22/16.
@@ -8,10 +12,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SignupRequest {
 
+    private Integer userId;
     private String email;
     private String firstName;
     private String lastName;
     private String password;
+    private List<Address> addresses = new ArrayList<>();
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     public String getEmail() {
         return email;

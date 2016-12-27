@@ -1,7 +1,7 @@
 package com.demo.controller;
 
 
-import com.demo.domain.UserEntity;
+import com.demo.domain.User;
 import com.demo.exception.UnauthorizedLoginException;
 import com.demo.request.SignupRequest;
 import com.demo.service.AuthService;
@@ -55,11 +55,10 @@ public class AuthController {
     @RequestMapping(value = "/signup", method = RequestMethod.PUT)
     public ResponseEntity signup(@RequestBody SignupRequest signupRequest, HttpServletRequest httpServletRequest) throws Exception {
 
-        LOG.info("test");
         LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
 
-        UserEntity userEntity = authService.registerUser(signupRequest);
-        return userEntity.getId() != null ? ResponseEntity.ok().body(userEntity) : ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+        User user = authService.registerUser(signupRequest);
+        return user.getUserId() != null ? ResponseEntity.ok().body(user) : ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
 
     }
 

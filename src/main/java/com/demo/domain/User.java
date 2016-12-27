@@ -1,38 +1,65 @@
 package com.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import static java.lang.System.in;
 
 /**
  * Created by rawad.elrifai on 12/22/16.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Table(name = "user")
-public class UserEntity {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
+    @Column(name="user_id")
+    private Integer userId;
     @Column(name="firstname")
     private String firstName;
     @Column(name="lastname")
     private String lastName;
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
     @Column(name="password")
     private String password;
     @Column(name="salt")
     private String salt;
 
-    public Integer getId() {
-        return id;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Address> addresses;
+
+    @CreatedDate
+    @Column(columnDefinition = "TIMESTAMP NOT NULL")
+    public Instant created;
+
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+
+        for (Address address:addresses) {
+            address.setUser(this);
+        }
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -73,5 +100,13 @@ public class UserEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
     }
 }
