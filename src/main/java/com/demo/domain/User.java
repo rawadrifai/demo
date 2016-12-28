@@ -1,9 +1,12 @@
 package com.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -18,29 +21,29 @@ import static java.lang.System.in;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "users")
-public class User {
+@SuppressWarnings("unused")
+public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @GeneratedValue
     private Integer userId;
     @Column(name="firstname")
     private String firstName;
     @Column(name="lastname")
     private String lastName;
-    @Column(name="email", unique = true)
+    @Column(name="email")
     private String email;
     @Column(name="password")
     private String password;
     @Column(name="salt")
     private String salt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Address> addresses;
 
-    @CreatedDate
-    @Column(columnDefinition = "TIMESTAMP NOT NULL")
-    public Instant created;
+  //  @CreatedDate
+  //  @Column(columnDefinition = "TIMESTAMP NOT NULL")
+  //  public Instant created;
 
     public List<Address> getAddresses() {
         return addresses;
@@ -49,9 +52,9 @@ public class User {
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
 
-        for (Address address:addresses) {
-            address.setUser(this);
-        }
+//        for (Address address:addresses) {
+//            address.setUser(this);
+//        }
     }
 
     public Integer getUserId() {
@@ -102,11 +105,11 @@ public class User {
         this.salt = salt;
     }
 
-    public Instant getCreated() {
-        return created;
-    }
+//    public Instant getCreated() {
+//        return created;
+//    }
 
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
+ //   public void setCreated(Instant created) {
+ //       this.created = created;
+ //   }
 }

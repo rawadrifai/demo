@@ -2,8 +2,11 @@
 package com.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -12,14 +15,12 @@ import javax.persistence.*;
 
 
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "addresses")
-public class Address {
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="address_id")
     private Integer addressId;
     @Column(name="street", unique = true)
     private String street;
@@ -27,7 +28,7 @@ public class Address {
     private String city;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public User getUser() {

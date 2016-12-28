@@ -14,8 +14,6 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     User save(User user);
-
-    ///  List<User> findByEmailAndPassword(String email);
     List<User> findAll();
 
 }
