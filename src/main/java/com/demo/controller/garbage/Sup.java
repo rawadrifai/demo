@@ -1,12 +1,9 @@
-package com.demo.controller;
+package com.demo.controller.garbage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import javax.ws.rs.Path;
 
 
 /**

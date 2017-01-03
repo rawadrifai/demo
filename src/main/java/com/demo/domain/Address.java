@@ -1,6 +1,7 @@
 
 package com.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,13 +23,14 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer addressId;
-    @Column(name="street", unique = true)
+    @Column(name="street")
     private String street;
     @Column(name="city")
     private String city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public User getUser() {

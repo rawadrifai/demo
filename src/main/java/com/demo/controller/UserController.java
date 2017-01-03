@@ -19,7 +19,7 @@ import java.util.List;
  * Created by rawad.elrifai on 5/3/16.
  */
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -29,18 +29,32 @@ public class UserController {
 
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/all", method = RequestMethod.POST)
-    public List<User> getAllUsers() throws Exception {
-        LOG.info("hello");
-       // LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
-        return userService.getAllUsers();
-        //return ResponseEntity.ok().body(userService.getAllUsers());
+    @RequestMapping(value = "/find/{firstName}", method = RequestMethod.GET)
+    public List<User> getAllUsers(@PathVariable (value = "firstName") String firstName, HttpServletRequest httpServletRequest) throws Exception {
 
+        LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
+        return userService.findByFirstName(firstName);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/updateemail", method = RequestMethod.PUT)
-    public ResponseEntity updateEmail(@RequestBody SignupRequest signupRequest, HttpServletRequest httpServletRequest) throws Exception {
+    @RequestMapping(value = "/findbyid/{userId}", method = RequestMethod.GET)
+    public User findUserById(@PathVariable (value = "userId") Integer userId, HttpServletRequest httpServletRequest) throws Exception {
+
+        LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
+        return userService.findByUserId(userId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/getaddresses", method = RequestMethod.GET)
+    public List getNames(HttpServletRequest httpServletRequest) throws Exception {
+
+        LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
+        return userService.getAddresses();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/updateuser", method = RequestMethod.PUT)
+    public ResponseEntity updateUser(@RequestBody SignupRequest signupRequest, HttpServletRequest httpServletRequest) throws Exception {
 
         LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
 

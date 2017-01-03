@@ -44,17 +44,6 @@ public class MainControllerAdvice {
     private void logRequestInfoAndException(HttpServletRequest request, Exception ex) {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(ex.getClass().toString()).append("-").append(ex.getMessage());
-        stringBuffer.append("request.getAuthType(): ").append(request.getAuthType());
-        stringBuffer.append("request.getAuthType(): ").append(request.getAuthType());
-        stringBuffer.append("request.getContextPath(): ").append(request.getContextPath());
-        stringBuffer.append("request.getMethod(): ").append(request.getMethod());
-        stringBuffer.append("request.getPathInfo(): ").append(request.getPathInfo());
-        stringBuffer.append("request.getPathTranslated(): ").append(request.getPathTranslated());
-        stringBuffer.append("request.getQueryString(): ").append(request.getQueryString());
-        stringBuffer.append("request.getRemoteUser(): ").append(request.getRemoteUser());
-        stringBuffer.append("request.getProtocol(): ").append(request.getProtocol());
-        stringBuffer.append("request.getServerPort(): ").append(request.getServerPort());
-        stringBuffer.append("request.getRequestURI(): ").append(request.getRequestURI());
         LOG.info(stringBuffer.toString());
     }
 }

@@ -1,10 +1,9 @@
-package com.demo.controller;
+package com.demo.controller.garbage;
 
 import com.demo.domain.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

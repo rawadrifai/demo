@@ -2,16 +2,9 @@ package com.demo.service;
 
 import com.demo.domain.User;
 import com.demo.repository.UserRepository;
-import com.demo.request.SignupRequest;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -24,8 +17,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> findByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName);
     }
+    public User findByUserId(Integer userId) {return userRepository.customSearchByUserId(userId); }
+    public List getAddresses() {return userRepository.getAddresses(); }
 
 }

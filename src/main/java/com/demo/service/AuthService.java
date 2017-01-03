@@ -1,8 +1,10 @@
 package com.demo.service;
 
+import com.demo.domain.Address;
 import com.demo.domain.User;
 import com.demo.repository.UserRepository;
 import com.demo.request.SignupRequest;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,12 @@ public class AuthService {
         user.setFirstName(signupRequest.getFirstName());
         user.setLastName(signupRequest.getLastName());
         user.setSalt(Long.toString(System.currentTimeMillis()));
+
         user.setAddresses(signupRequest.getAddresses());
+
+        for (Address address:user.getAddresses()) {
+            address.setUser(user);
+        }
 
         // password stored will be password + salt
         String clearPasswordAndSalt = signupRequest.getPassword() + user.getSalt();
