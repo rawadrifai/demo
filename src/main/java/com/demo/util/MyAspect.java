@@ -28,9 +28,12 @@ public class MyAspect {
     @Before("within(" + aspectPackage + ")")
     public void before(JoinPoint joinPoint) throws Throwable {
 
-        LOG.info("hijacked method : " + joinPoint.getSignature());
-        LOG.info("hijacked arguments : " + Arrays.toString(joinPoint.getArgs()));
-        LOG.info("Proceeding with " + joinPoint.getSignature());
+        StringBuffer stringBuffer = new StringBuffer()
+                .append("hijacked method : " + joinPoint.getSignature())
+                .append("\nhijacked arguments : " + Arrays.toString(joinPoint.getArgs()))
+                .append("\nProceeding with " + joinPoint.getSignature());
+
+        LOG.info(stringBuffer.toString());
 
     }
 
