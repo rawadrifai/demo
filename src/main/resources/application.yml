@@ -11,4 +11,4 @@ spring:
       ddl-auto: create-drop
     show-sql: true
 
-
+aspect-package: "com.demo.*.*"

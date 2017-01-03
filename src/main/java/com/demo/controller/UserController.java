@@ -29,11 +29,11 @@ public class UserController {
 
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/find/{firstName}", method = RequestMethod.GET)
-    public List<User> getAllUsers(@PathVariable (value = "firstName") String firstName, HttpServletRequest httpServletRequest) throws Exception {
+    @RequestMapping(value = "/find/{firstNameOrLastName}", method = RequestMethod.GET)
+    public List<User> findByFirstNameOrLastName(@PathVariable (value = "firstNameOrLastName") String firstNameOrLastName, HttpServletRequest httpServletRequest) throws Exception {
 
         LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
-        return userService.findByFirstName(firstName);
+        return userService.findByFirstNameOrLastName(firstNameOrLastName, firstNameOrLastName);
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -53,12 +53,12 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/signup", method = RequestMethod.PUT)
-    public ResponseEntity signup(@RequestBody SignupRequest signupRequest, HttpServletRequest httpServletRequest) throws Exception {
+    public ResponseEntity signup(@RequestBody List<SignupRequest> signupRequests, HttpServletRequest httpServletRequest) throws Exception {
 
         LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
 
-        User user = authService.registerUser(signupRequest);
-        return user.getUserId() != null ? ResponseEntity.ok().body(user) : ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+        List<User> users = authService.registerUsers(signupRequests);
+        return ResponseEntity.ok().body(users);
 
     }
 

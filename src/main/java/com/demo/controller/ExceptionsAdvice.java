@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.exception.UnauthorizedLoginException;
+import com.demo.exception.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by rawad.elrifai on 7/19/16.
  */
 @RestControllerAdvice
-public class MainControllerAdvice {
+public class ExceptionsAdvice {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
@@ -32,6 +33,13 @@ public class MainControllerAdvice {
 
         logRequestInfoAndException(request, ex);
         return new ResponseEntity<String>("Record already exists", HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(HttpServletRequest request, Exception ex) {
+
+        logRequestInfoAndException(request, ex);
+        return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)

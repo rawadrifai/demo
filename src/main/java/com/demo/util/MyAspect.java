@@ -2,12 +2,12 @@ package com.demo.util;
 
 import com.demo.request.SignupRequest;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 
@@ -22,24 +22,27 @@ public class MyAspect {
 
     private static final Logger LOG = LoggerFactory.getLogger(MyAspect.class);
 
+    @Value("${aspect-package}")
+    public final String aspectPackage = "com.demo.*.*";
 
-    //@Before("within(com.demo.*.*)")
-    public void before(JoinPoint joinPoint)
-    {
-        System.out.println(joinPoint.getKind() + "-" + joinPoint.getTarget().getClass().getName());
-        LOG.info("AOP Activated BEFORE " + joinPoint.getSignature().getName() + " with params: " + Arrays.toString(joinPoint.getArgs()));
+    @Before("within(" + aspectPackage + ")")
+    public void before(JoinPoint joinPoint) throws Throwable {
+
+        LOG.info("hijacked method : " + joinPoint.getSignature());
+        LOG.info("hijacked arguments : " + Arrays.toString(joinPoint.getArgs()));
+        LOG.info("Proceeding with " + joinPoint.getSignature());
+
     }
 
-    //@After("within(com.demo.*.*)")
+    @After("within(" + aspectPackage + ")")
     public void after(JoinPoint joinPoint)
     {
-        LOG.info("AOP Activated AFTER " + joinPoint.getSignature().getName());
+        LOG.info("Done with " + joinPoint.getSignature());
     }
 
-    //@AfterReturning(pointcut = "within(com.demo.*.*)", returning = "result")
+    @AfterReturning(pointcut = "within(" + aspectPackage + ")", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result)
     {
-        LOG.info("AOP Activated AFTER RETURNING " + joinPoint.getSignature().getName());
-        LOG.info(result.toString());
+        LOG.info("Return from " + joinPoint.getSignature().getName() + ": " + result.toString());
     }
 }
