@@ -12,3 +12,4 @@ spring:
     show-sql: true
 
 aspect-package: "com.demo.*.*"
+aws-rdc: "playground.cugaphyvdrtc.us-west-2.rds.amazonaws.com"

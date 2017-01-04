@@ -6,6 +6,9 @@ import com.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,5 +35,9 @@ public class UserService {
     }
     public User findByUserId(Integer userId) {return userRepository.customSearchByUserId(userId); }
     public List getAddresses() {return userRepository.getAddresses(); }
+
+    public List<User> findByCreated(Instant created) {
+        return userRepository.customFindByCreated(created.toString());
+    }
 
 }

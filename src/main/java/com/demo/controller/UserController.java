@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -42,6 +45,14 @@ public class UserController {
 
         LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
         return userService.findByUserId(userId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/findbycreated", method = RequestMethod.GET)
+    public List<User> findUserByCreated(HttpServletRequest httpServletRequest) throws Exception {
+
+        LOG.info("Received request: {} - {}?{}", httpServletRequest.getProtocol(), httpServletRequest.getRequestURI(), httpServletRequest.getQueryString() );
+        return userService.findByCreated(Instant.parse("2017-01-10T15:09:00Z"));
     }
 
     @ResponseStatus(HttpStatus.OK)

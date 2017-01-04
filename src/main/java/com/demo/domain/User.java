@@ -1,21 +1,14 @@
 package com.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-import static java.lang.System.in;
+import java.util.*;
 
 /**
  * Created by rawad.elrifai on 12/22/16.
@@ -23,7 +16,11 @@ import static java.lang.System.in;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User extends AuditorEntity {
+
+    public User() {
+        super();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +41,19 @@ public class User implements Serializable {
     @Column(name="salt")
     private String salt;
 
-    @CreatedDate
-    @Column(columnDefinition = "TIMESTAMP NOT NULL")
-    public String created;
+    /*@CreatedDate
+    @Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    private String createdDate;
+
+    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedDate
+    @Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    private String lastModifiedDate;
+
+    @LastModifiedBy
+    private String lastModifiedBy;*/
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> addresses;
@@ -108,13 +115,15 @@ public class User implements Serializable {
         this.salt = salt;
     }
 
-    public String getCreated() {
-        return created;
+
+   /* public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreated(String created) {
-        this.created = created;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
+*/
 
     @Override
     public String toString() {
@@ -125,7 +134,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
-                ", created='" + created + '\'' +
+           //     ", createdDate='" + createdDate + '\'' +
                 ", addresses=" + addresses +
                 '}';
     }

@@ -6,6 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -20,12 +22,13 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findByFirstName(String firstName);
     List<User> findByFirstNameOrLastName(String firstName, String lastName);
 
-
-
     @Query(value = "SELECT u from User u where u.userId=:userId")
     User customSearchByUserId(@Param("userId") Integer userId);
 
     @Query(value = "SELECT a.street, a.city from Address a")
     List getAddresses();
+
+    @Query(value = "SELECT u from User u where u.createdDate<:createdDate")
+    List<User> customFindByCreated(@Param("createdDate") String created);
 
 }
