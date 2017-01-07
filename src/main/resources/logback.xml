@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true">
-    <property name="LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${PID:-????} %5p [%t] --- %c{1}: %m%n"/>
+<configuration scan="true" scanPeriod="30 seconds" packagingData="true">
+    <property name="LOG_PATTERN" value="%date %level [%thread] %logger{10} [%file:%line] %msg%n"/>
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-/tmp/}service.log}"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -21,8 +21,9 @@
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
-    <logger name="org.springframework.integration.file" level="DEBUG" />
-    <root level="INFO">
+    <logger name="com.demo" level="INFO"/>
+
+    <root level="OFF">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>

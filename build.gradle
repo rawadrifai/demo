@@ -53,9 +53,13 @@ dependencies {
 	compile('org.hibernate:hibernate-validator:5.2.4.Final')
 	compile('org.hibernate:hibernate-entitymanager:5.1.0.Final')
 	compile 'mysql:mysql-connector-java:5.1.38'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
+
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.8'
+	compile group: 'ch.qos.logback', name: 'logback-core', version: '1.1.8'
+
+
 	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.3.0-rc1'
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.4") // handles jackson new java8 Date APIs
 
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')

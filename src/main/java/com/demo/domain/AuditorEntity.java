@@ -8,6 +8,7 @@ import org.springframework.data.domain.AuditorAware;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.time.Instant;
 
 /**
  * Created by rawad.elrifai on 1/3/17.
@@ -27,24 +28,24 @@ public abstract class AuditorEntity implements AuditorAware {
 
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
-    private String createdDate;
+    private Instant createdDate;
 
     @CreatedBy
     private String createdBy;
 
     @LastModifiedDate
     @Column(columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
-    private String lastModifiedDate;
+    private Instant lastModifiedDate;
 
     @LastModifiedBy
     private String lastModifiedBy;
 
 
-    public String getCreatedDate() {
+    public Instant getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -56,11 +57,11 @@ public abstract class AuditorEntity implements AuditorAware {
         this.createdBy = createdBy;
     }
 
-    public String getLastModifiedDate() {
+    public Instant getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(String lastModifiedDate) {
+    public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

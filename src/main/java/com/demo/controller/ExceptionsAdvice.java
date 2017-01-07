@@ -51,7 +51,11 @@ public class ExceptionsAdvice {
 
     private void logRequestInfoAndException(HttpServletRequest request, Exception ex) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(ex.getClass().toString()).append("-").append(ex.getMessage());
+        stringBuffer.append("Exception Class: ")
+                .append(ex.getClass().toString())
+                .append("\nException Message: ")
+                .append(ex.getMessage());
+
         LOG.info(stringBuffer.toString());
     }
 }
